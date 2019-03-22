@@ -1,0 +1,24 @@
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker build -t ken/fullstack-docker -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run ken/fullstack-docker npm run test -- --coverage
+
+after_success:
+  - docker build ken/fullstack-docker-client ./client
+  - docker build ken/fullstack-docker-nginx ./nginx
+  - docker build ken/fullstack-docker-server ./server
+  - docker build ken/fullstack-docker-worker ./worker
+
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take images and push to docker hub
+  - docker push ken/fullstack-docker-client
+  - docker push ken/fullstack-docker-nginx
+  - docker push ken/fullstack-docker-server
+  - docker push ken/fullstack-docker-worker
