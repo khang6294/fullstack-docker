@@ -22,3 +22,4 @@ after_success:
   - docker push ken/fullstack-docker-nginx
   - docker push ken/fullstack-docker-server
   - docker push ken/fullstack-docker-worker
+  
