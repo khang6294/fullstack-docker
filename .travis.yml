@@ -10,10 +10,10 @@ script:
   - docker run ken/fullstack-docker npm run test -- --coverage
 
 after_success:
-  - docker build ken/fullstack-docker-client ./client
-  - docker build ken/fullstack-docker-nginx ./nginx
-  - docker build ken/fullstack-docker-server ./server
-  - docker build ken/fullstack-docker-worker ./worker
+  - docker build -t ken/fullstack-docker-client ./client
+  - docker build -t ken/fullstack-docker-nginx ./nginx
+  - docker build -t ken/fullstack-docker-server ./server
+  - docker build -t ken/fullstack-docker-worker ./worker
 
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
